@@ -1,0 +1,75 @@
+<!--
+ * @Author: Xing💭
+ * @Date: 2020-10-26 15:28:23
+ * @LastEditTime: 2020-10-26 16:49:24
+ * @LastEditors: Xing💭
+ * @Description: 
+ * @FilePath: /leetcode/每日一题/README.md
+ * @Xing💭
+-->
+
+#### 有多少小于当前数字的数字?
+
+给你一个数组 nums，对于其中每个元素 nums[i]，请你统计数组中比它小的所有数字的数目。
+换而言之，对于每个 nums[i] 你必须计算出有效的 j 的数量，其中 j 满足 j != i 且 nums[j] < nums[i] 。
+以数组形式返回答案。
+
+示例 1：
+```javascript
+    输入：nums = [8,1,2,2,3]
+    输出：[4,0,1,1,3]
+    解释： 
+    对于 nums[0]=8 存在四个比它小的数字：（1，2，2 和 3）。 
+    对于 nums[1]=1 不存在比它小的数字。
+    对于 nums[2]=2 存在一个比它小的数字：（1）。 
+    对于 nums[3]=2 存在一个比它小的数字：（1）。 
+    对于 nums[4]=3 存在三个比它小的数字：（1，2 和 2）。
+```
+
+<details><summary><b>答案</b></summary>
+<p>
+采用暴力解题法：
+  双重for循环， 判断第一层循环是否大于第二层循环，如果满足条件递增变量 存入数组记录。
+
+```javascript
+  let nums = [8,1,2,2,3]
+  let smallerNumbersThanCurrent = function(nums) {
+      let tmp = []
+      for(let i = 0 ; i < nums.length ; i ++){
+          let cnt = 0
+          for(let j = 0 ; j < nums.length ; j ++){
+              if(nums[i] > nums[j]){
+                  cnt++
+              }
+          }
+          tmp.push(cnt)
+      }
+      return tmp
+  };
+  let a = smallerNumbersThanCurrent(nums)
+  console.log(a)
+```
+
+排序后取index:
+  解题思路很简单, 排序后它的index位置正好代表它是否有比它小的数（例如：原来的数组[8,1,2,2,3] ， 排序后变成了 [1,2,2,3,8]，8 前面有4个比它小的数 ），遍历原来的数组，利用indexOf去获取下标的位置 ,也可以使用 reduce来实现
+```javascript
+  let nums = [8,1,2,2,3]
+  let smallerNumbersThanCurrent = function(nums) {
+      const tmp = []
+      let copyNums = JSON.parse(JSON.stringify(nums));
+      copyNums.sort((a,b) => a - b)
+      nums.forEach((item,index) => {
+        const curIdx = copyNums.indexOf(item)
+        if(curIdx !== -1){
+          tmp.push(curIdx)
+        }
+      })
+      return tmp
+  };
+```
+
+
+</p>
+</details>
+
+---
