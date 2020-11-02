@@ -1,7 +1,7 @@
 <!--
  * @Author: Xing💭
  * @Date: 2020-10-26 17:13:55
- * @LastEditTime: 2020-10-30 15:12:16
+ * @LastEditTime: 2020-11-02 14:41:51
  * @LastEditors: Xing💭
  * @Description:
  * @FilePath: /leetcode/简单题/README.md
@@ -137,10 +137,10 @@ var reverse = function (x) {
 ```
 
 位运算 解题:
-  (x % 10) 取余 获取 末位数字 ， result * 10 + (x % 10) 拼接回 result
-  x / 10 去除末位，| 0 强制转换为32位有符号整数。
-  通过 | 0 取整，无论正负，只移除小数点部分（正数向下取整，负数向上取整）。
-  result | 0 超过32位的整数转换结果不等于自身，可用作溢出判断。
+(x % 10) 取余 获取 末位数字 ， result \* 10 + (x % 10) 拼接回 result
+x / 10 去除末位，| 0 强制转换为 32 位有符号整数。
+通过 | 0 取整，无论正负，只移除小数点部分（正数向下取整，负数向上取整）。
+result | 0 超过 32 位的整数转换结果不等于自身，可用作溢出判断。
 
 ```javascript
 /**
@@ -161,3 +161,55 @@ var reverse = function (x) {
 </details>
 
 ---
+
+# 回文数
+
+判断一个整数是否是回文数。回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
+
+示例 1：
+
+```javascript
+输入: 121;
+输出: true;
+```
+
+示例 2：
+
+```javascript
+输入: -121
+输出: false
+解释: 从左向右读, 为 -121 。 从右向左读, 为 121- 。因此它不是一个回文数。
+```
+
+示例 3：
+
+```javascript
+输入: 10
+输出: false
+解释: 从右向左读, 为 01 。因此它不是一个回文数。
+```
+
+<details>
+  <summary><b>答案</b></summary>
+  <p>
+    采用暴力解题法：
+      数字反转后是一摸一样的，返回 true ， 也就是说 把 负数 排除出去， 然后把 正整数反转后判断是否和 参数 一致即可。
+
+```javascript
+/**
+ * @param {number} x
+ * @return {boolean}
+ */
+var isPalindrome = function (x) {
+  if(x < 0) return false
+  let t = x.toString().split('').reverse().join('')
+  
+  if(x == t) return true
+
+  return false
+};
+const p = isPalindrome(121)
+```
+
+  </p>
+</details>
