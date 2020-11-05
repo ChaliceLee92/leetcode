@@ -1,7 +1,7 @@
 <!--
  * @Author: Xing💭
  * @Date: 2020-10-26 17:13:55
- * @LastEditTime: 2020-11-02 14:41:51
+ * @LastEditTime: 2020-11-05 17:27:07
  * @LastEditors: Xing💭
  * @Description:
  * @FilePath: /leetcode/简单题/README.md
@@ -192,7 +192,7 @@ var reverse = function (x) {
 <details>
   <summary><b>答案</b></summary>
   <p>
-    采用暴力解题法：
+    字符串 解题法：
       数字反转后是一摸一样的，返回 true ， 也就是说 把 负数 排除出去， 然后把 正整数反转后判断是否和 参数 一致即可。
 
 ```javascript
@@ -201,14 +201,305 @@ var reverse = function (x) {
  * @return {boolean}
  */
 var isPalindrome = function (x) {
-  if(x < 0) return false
-  let t = x.toString().split('').reverse().join('')
-  
-  if(x == t) return true
+ if (x < 0 || (x % 10 == 0 && x != 0)) return false;
 
-  return false
+ let t = Number(x.toString().split('').reverse().join(''));
+
+ if (x == t) return true;
+
+ return false;
 };
-const p = isPalindrome(121)
+const p = isPalindrome(121);
+```
+
+不通过字符串方式 解题法:
+  判断 x 是否 大于 初始值 reverseNumber （ 目的是为了判断 遍历是否到达 x 值的一半 ）, 进入循环 ，不断的取出x值的后面几位数，不断抛弃 x 值的后面几位数。
+  最后 当数字长度为奇数时，我们可以通过 revertedNumber/10 去除处于中位的数字，由于处于中位的数字不影响回文（它总是与自己相等），所以我们可以简单地将其去除。
+
+```javascript
+/**
+* @param {number} x
+* @return {boolean}
+*/
+var isPalindrome = function (x) {
+ if (x < 0 || (x % 10 == 0 && x != 0)) return false;
+
+ let reverseNumber = 0;
+ while (x > reverseNumber) {
+  reverseNumber = reverseNumber * 10 + (x % 10);
+  x = parseInt(x / 10);
+ }
+ // 当数字长度为奇数时，我们可以通过 revertedNumber/10 去除处于中位的数字。
+ // 例如，当输入为 12321 时，在 while 循环的末尾我们可以得到 x = 12，revertedNumber = 123，
+ // 由于处于中位的数字不影响回文（它总是与自己相等），所以我们可以简单地将其去除。
+ return x == reverseNumber || x == parseInt(reverseNumber / 10);
+};
+const p = isPalindrome(121);
+```
+
+  </p>
+</details>
+
+---
+
+# 罗马数字转整数
+
+罗马数字包含以下七种字符: I， V， X， L，C，D 和 M。
+
+```javascript
+    字符          数值
+    I             1
+    V             5
+    X             10
+    L             50
+    C             100
+    D             500
+    M             1000
+```
+
+例如， 罗马数字 2 写做 II ，即为两个并列的 1。12 写做 XII ，即为 X + II 。 27 写做  XXVII, 即为 XX + V + II 。
+
+通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 IIII，而是 IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为 IX。这个特殊的规则只适用于以下六种情况：
+
+- I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。
+- X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。
+- C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
+
+给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。
+
+示例 1：
+
+```javascript
+输入: "III"
+输出: 3
+```
+
+示例 2：
+
+```javascript
+输入: "IV"
+输出: 4
+```
+
+示例 3：
+
+```javascript
+输入: "IX"
+输出: 9
+```
+
+示例 4：
+
+```javascript
+输入: "LVIII"
+输出: 58
+解释: L = 50, V= 5, III = 3.
+```
+
+示例 5：
+
+```javascript
+输入: "MCMXCIV"
+输出: 1994
+解释: M = 1000, CM = 900, XC = 90, IV = 4.
+```
+
+<details>
+  <summary><b>答案</b></summary>
+  <p>
+    遍历：
+        通过示例 寻找到规则 , 字符串 IV , 右边的字符值大于左边的话 ，应该是减法 ， 反之是加法
+
+```javascript
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var romanToInt = function(s) {
+  // 罗马数字包含的 七种字符对应的值
+  let map = {
+    I: 1,
+    V: 5,
+    X: 10,
+    L: 50,
+    C: 100,
+    D: 500,
+    M: 1000,
+ };
+ let result = 0;
+ for (let i = 0; i < s.length; i++) {
+    // 遍历 字符串 ， 判断当前字符 是否小于它的下一位的值
+    if(map[s[i]] < map[s[i + 1]]){
+      result -= map[s[i]]
+    }else{
+      result += map[s[i]]
+    }
+  }
+ return result;
+};
+```
+
+  </p>
+</details>
+
+---
+
+# 最长公共前缀
+
+编写一个函数来查找字符串数组中的最长公共前缀。
+
+如果不存在公共前缀，返回空字符串 ""。
+
+示例 1：
+
+```javascript
+输入: ["flower","flow","flight"]
+输出: "fl"
+```
+
+示例 2：
+
+```javascript
+输入: ["dog","racecar","car"]
+输出: ""
+解释: 输入不存在公共前缀。
+```
+
+说明:
+  所有输入只包含小写字母 a-z 。
+
+<details>
+  <summary><b>答案</b></summary>
+  <p>
+
+  解题思路:
+      双层遍历暴力破解 , 遍历数组中的第一个元素作为前缀的参照物, 第二层遍历从第二个元素开始, 判断是否相等，拼接得到结果(注意 ： 拼接工作应该是在第一层循环处，而不是在第二层里面工作)
+
+```javascript
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+var longestCommonPrefix = function (strs) {
+ let res = '';
+ if (!strs.length) return res;
+
+ for (let j = 0; j < strs[0].length; j++) {
+  for (let i = 1; i < strs.length; i++) {
+   if (strs[i][j] != strs[0][j]) return res;
+  }
+  res += strs[0][j];
+ }
+
+ return res;
+};
+
+let strs = ['flower', 'flow', 'flight'];
+
+const res = longestCommonPrefix(strs);
+```
+
+  </p>
+</details>
+
+---
+
+# 有效的括号
+
+给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+
+有效字符串需满足：
+
+1. 左括号必须用相同类型的右括号闭合。
+2. 左括号必须以正确的顺序闭合。
+3. 注意空字符串可被认为是有效字符串。
+
+示例 1：
+
+```javascript
+输入: "()"
+输出: true
+```
+
+示例 2：
+
+```javascript
+输入: "()[]{}"
+输出: true
+```
+
+示例 3：
+
+```javascript
+输入: "(]"
+输出: false
+```
+
+示例 4：
+
+```javascript
+输入: "([)]"
+输出: false
+```
+
+示例 5：
+
+```javascript
+输入: "{[]}"
+输出: true
+```
+
+说明:
+  所有输入只包含小写字母 a-z 。
+
+<details>
+  <summary><b>答案</b></summary>
+  <p>
+
+  解题思路:
+    维护一个栈
+    如果是奇数 ， 一定是 false
+    把成对的符合存储成哈希， key 是 左边括号， value 是 右边括号
+    遍历字符，首先判断是否是 左边括号， 也就是哈希中的key
+    如果是左边括号 压入栈内存
+    如果不是 ， 判断当前元素是否跟已经压入栈的元素成一对（别忘了， map中的元素存储为 ： 左边括号 => 右边括号 ， 所以， 只需要取出栈中最后压入的元素去哈希中拿value）
+    匹配为一对的话 ， 把栈中最后的元素删除。(例如: '({[]})[]' , 前面三个字符都是左边的括号，那么他们会被依次压入栈中， 遇到第4个字符发现没有，便会进入是否跟最后压入的字符匹配，也就是 [ ， 如果不匹配 ， 整个程序结束，如果匹配， 删除 [ , 进入下一轮遍历,知道栈为空)
+    否则 返回false
+    最后 判断栈中是否为空， 返回值
+
+```javascript
+/**
+ * @param {string} s
+ * @return {boolean}
+ */
+var isValid = function (s) {
+ if (s.length % 2) return false;
+ let map = new Map([
+  ['(', ')'],
+  ['{', '}'],
+  ['[', ']'],
+ ]);
+
+ let stack = [];
+
+ for (let i = 0; i < s.length; i++) {
+  if (map.has(s[i])) {
+   // 左边的括号直接push 入栈
+   stack.push(s[i]);
+  } else {
+   // 判断栈内的最后一个元素是否存在map中
+   if (s[i] === map.get(stack[stack.length - 1])) {
+    stack.pop();
+   } else {
+    return false;
+   }
+  }
+ }
+
+ return !stack.length
+};
+
+const res = isValid('({[]})[]');
 ```
 
   </p>

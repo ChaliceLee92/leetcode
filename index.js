@@ -1,14 +1,33 @@
 /**
- * @param {number} x
+ * @param {string} s
  * @return {boolean}
  */
-var isPalindrome = function (x) {
-  if(x < 0) return false
-  let t = x.toString().split('').reverse().join('')
-  
-  if(x == t) return true
+var isValid = function (s) {
+	if (s.length % 2) return false;
+	let map = new Map([
+		['(', ')'],
+		['{', '}'],
+		['[', ']'],
+	]);
 
-  return false
+	let stack = [];
+
+	for (let i = 0; i < s.length; i++) {
+		if (map.has(s[i])) {
+			// 左边的括号直接push 入栈
+			stack.push(s[i]);
+		} else {
+			// 判断栈内的最后一个元素是否存在map中
+			if (s[i] === map.get(stack[stack.length - 1])) {
+				stack.pop();
+			} else {
+				return false;
+			}	
+		}
+	}
+	
+	return !stack.length
 };
-const p = isPalindrome(121)
-console.log('%c 🥞 p: ', 'font-size:20px;background-color: #B03734;color:#fff;', p);
+
+const res = isValid('({[]})[]');
+
