@@ -1,33 +1,19 @@
 /**
- * @param {string} s
- * @return {boolean}
+ * @param {number[]} nums
+ * @return {number}
  */
-var isValid = function (s) {
-	if (s.length % 2) return false;
-	let map = new Map([
-		['(', ')'],
-		['{', '}'],
-		['[', ']'],
-	]);
-
-	let stack = [];
-
-	for (let i = 0; i < s.length; i++) {
-		if (map.has(s[i])) {
-			// 左边的括号直接push 入栈
-			stack.push(s[i]);
-		} else {
-			// 判断栈内的最后一个元素是否存在map中
-			if (s[i] === map.get(stack[stack.length - 1])) {
-				stack.pop();
-			} else {
-				return false;
-			}	
+var removeDuplicates = function (nums) {
+	if (nums.length == 0) return 0;
+	let i = 0;
+	for (let j = 1; j < nums.length; j++) {
+		if (nums[j] != nums[i]) {
+			i++;
+			nums[i] = nums[j];
 		}
+		console.log(i,'....');
 	}
-	
-	return !stack.length
+	return i + 1;
 };
 
-const res = isValid('({[]})[]');
-
+const a  = removeDuplicates([1,1,2])
+console.log('%c 🥞 a: ', 'font-size:20px;background-color: #EA7E5C;color:#fff;', a);

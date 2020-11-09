@@ -1,7 +1,7 @@
 <!--
  * @Author: Xing💭
  * @Date: 2020-10-26 17:13:55
- * @LastEditTime: 2020-11-05 17:27:07
+ * @LastEditTime: 2020-11-09 18:17:21
  * @LastEditors: Xing💭
  * @Description:
  * @FilePath: /leetcode/简单题/README.md
@@ -500,6 +500,231 @@ var isValid = function (s) {
 };
 
 const res = isValid('({[]})[]');
+```
+
+  </p>
+</details>
+
+---
+
+# 合并两个有序链表
+
+将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
+
+示例 1：
+
+```javascript
+输入：1->2->4, 1->3->4
+输出：1->1->2->3->4->4
+```
+
+<details>
+  <summary><b>答案</b></summary>
+  <p>
+
+  解题思路:
+    双指针解题。
+    循环遍历 , 判断大小归并。
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function (l1, l2) {
+ // 初始化 一个新的链表
+ let newListNode = {
+  val: 0,
+  next: null
+ };
+ // 指针
+ let pre = newListNode;
+
+ // l1 和 l2 链表不为 null
+ while (l1 && l2) {
+  // 进入 循环 ， 判断 l1 是否小于 l2
+  if(l1.val < l2.val){
+   pre.next = l1;
+   l1 = l1.next;
+  }else {
+   pre.next = l2;
+   l2 = l2.next;
+  }
+  // 第二个指针 ， 指向 next 的 内存地址
+  pre = pre.next;
+ }
+ // 最后一个节点要设置 ， 原因： l1 或者 l2 其中一个 为null 的时候就会停止进入循环体， 所以要拿到最后一层
+ pre.next = l1 || l2
+ // 返回 新链表 的 next
+ return newListNode.next
+};
+
+let ListNode1 = {
+ val: 1,
+ next: {
+  val: 2,
+  next: {
+   val: 4,
+   next: null,
+  },
+ },
+};
+
+let ListNode2 = {
+ val: 1,
+ next: {
+  val: 3,
+  next: {
+   val: 4,
+   next: null,
+  },
+ },
+};
+
+const res = mergeTwoLists(ListNode1, ListNode2);
+```
+
+  解题思路:
+    递归解题 , l1 或者 l2 为 null 的时候 结束递归。
+
+```javascript
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+
+var mergeTwoLists = function (l1, l2) {
+ if(!l1) return l2;
+ if(!l2) return l1;
+
+ if(l1.val < l2.val){
+  l1.next = mergeTwoLists(l1.next , l2)
+  return l1
+ }else{
+  l2.next = mergeTwoLists(l1, l2.next);
+  return l2
+ }
+};
+
+
+
+let ListNode1 = {
+ val: 1,
+ next: {
+  val: 2,
+  next: {
+   val: 4,
+   next: null,
+  },
+ },
+};
+
+let ListNode2 = {
+ val: 1,
+ next: {
+  val: 3,
+  next: {
+   val: 4,
+   next: null,
+  },
+ },
+};
+
+const res = mergeTwoLists(ListNode1, ListNode2);
+```
+
+  </p>
+</details>
+
+---
+
+# 删除排序数组中的重复项
+
+给定一个排序数组，你需要在 原地 删除重复出现的元素，使得每个元素只出现一次，返回移除后数组的新长度。
+
+不要使用额外的数组空间，你必须在 原地 修改输入数组 并在使用 O(1) 额外空间的条件下完成。
+
+示例 1：
+
+```javascript
+给定数组 nums = [1,1,2],
+
+函数应该返回新的长度 2, 并且原数组 nums 的前两个元素被修改为 1, 2。
+
+你不需要考虑数组中超出新长度后面的元素。
+```
+
+示例 2：
+
+```javascript
+给定 nums = [0,0,1,1,1,2,2,3,3,4],
+
+函数应该返回新的长度 5, 并且原数组 nums 的前五个元素被修改为 0, 1, 2, 3, 4。
+
+你不需要考虑数组中超出新长度后面的元素。
+```
+
+说明:
+
+为什么返回数值是整数，但输出的答案是数组呢?
+
+请注意，输入数组是以「引用」方式传递的，这意味着在函数里修改输入数组对于调用者是可见的。
+
+你可以想象内部操作如下:
+
+```javascript
+// nums 是以“引用”方式传递的。也就是说，不对实参做任何拷贝
+int len = removeDuplicates(nums);
+
+// 在函数里修改输入数组对于调用者是可见的。
+// 根据你的函数返回的长度, 它会打印出数组中该长度范围内的所有元素。
+for (int i = 0; i < len; i++) {
+    print(nums[i]);
+}
+```
+
+<details>
+  <summary><b>答案</b></summary>
+  <p>
+
+  解题思路:
+    双指针解题: 前指针 与 后指针 对比 , 如果相等 前指针不变 ， 后指针继续向后查找， 如果相等， 前后指针向后移动， 并把后指针的值复制给前指针.
+    遍历结束后返回数组长度 , 因为 i 是索引位置 ， 所以要加 1 ，才是数组长度
+
+```javascript
+  /**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var removeDuplicates = function (nums) {
+ if (nums.length == 0) return 0;
+ let i = 0;
+ for (let j = 1; j < nums.length; j++) {
+  if (nums[j] != nums[i]) {
+   i++;
+   nums[i] = nums[j];
+  }
+ }
+ return i + 1;
+};
+
+const res  = removeDuplicates([1,1,2])
 ```
 
   </p>
