@@ -2,18 +2,18 @@
  * @param {number[]} nums
  * @return {number}
  */
-var removeDuplicates = function (nums) {
+var removeDuplicates = function (nums , val) {
 	if (nums.length == 0) return 0;
+
 	let i = 0;
-	for (let j = 1; j < nums.length; j++) {
-		if (nums[j] != nums[i]) {
-			i++;
+	for (let j = 0; j < nums.length; j++) {
+		if (nums[j] != val) {
 			nums[i] = nums[j];
+			i++;
 		}
-		console.log(i,'....');
 	}
-	return i + 1;
+	return i;
 };
 
-const a  = removeDuplicates([1,1,2])
+const a = removeDuplicates([3, 2, 2, 3], 3);
 console.log('%c 🥞 a: ', 'font-size:20px;background-color: #EA7E5C;color:#fff;', a);

@@ -1,7 +1,7 @@
 <!--
  * @Author: Xing💭
  * @Date: 2020-10-26 17:13:55
- * @LastEditTime: 2020-11-09 18:17:21
+ * @LastEditTime: 2020-11-11 16:29:29
  * @LastEditors: Xing💭
  * @Description:
  * @FilePath: /leetcode/简单题/README.md
@@ -213,14 +213,14 @@ const p = isPalindrome(121);
 ```
 
 不通过字符串方式 解题法:
-  判断 x 是否 大于 初始值 reverseNumber （ 目的是为了判断 遍历是否到达 x 值的一半 ）, 进入循环 ，不断的取出x值的后面几位数，不断抛弃 x 值的后面几位数。
-  最后 当数字长度为奇数时，我们可以通过 revertedNumber/10 去除处于中位的数字，由于处于中位的数字不影响回文（它总是与自己相等），所以我们可以简单地将其去除。
+判断 x 是否 大于 初始值 reverseNumber （ 目的是为了判断 遍历是否到达 x 值的一半 ）, 进入循环 ，不断的取出 x 值的后面几位数，不断抛弃 x 值的后面几位数。
+最后 当数字长度为奇数时，我们可以通过 revertedNumber/10 去除处于中位的数字，由于处于中位的数字不影响回文（它总是与自己相等），所以我们可以简单地将其去除。
 
 ```javascript
 /**
-* @param {number} x
-* @return {boolean}
-*/
+ * @param {number} x
+ * @return {boolean}
+ */
 var isPalindrome = function (x) {
  if (x < 0 || (x % 10 == 0 && x != 0)) return false;
 
@@ -257,51 +257,51 @@ const p = isPalindrome(121);
     M             1000
 ```
 
-例如， 罗马数字 2 写做 II ，即为两个并列的 1。12 写做 XII ，即为 X + II 。 27 写做  XXVII, 即为 XX + V + II 。
+例如， 罗马数字 2 写做  II ，即为两个并列的 1。12 写做  XII ，即为  X + II 。 27 写做   XXVII, 即为  XX + V + II 。
 
-通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做 IIII，而是 IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为 IX。这个特殊的规则只适用于以下六种情况：
+通常情况下，罗马数字中小的数字在大的数字的右边。但也存在特例，例如 4 不写做  IIII，而是  IV。数字 1 在数字 5 的左边，所表示的数等于大数 5 减小数 1 得到的数值 4 。同样地，数字 9 表示为  IX。这个特殊的规则只适用于以下六种情况：
 
-- I 可以放在 V (5) 和 X (10) 的左边，来表示 4 和 9。
-- X 可以放在 L (50) 和 C (100) 的左边，来表示 40 和 90。
-- C 可以放在 D (500) 和 M (1000) 的左边，来表示 400 和 900。
+- I  可以放在  V (5) 和  X (10) 的左边，来表示 4 和 9。
+- X  可以放在  L (50) 和  C (100) 的左边，来表示 40 和  90。
+- C  可以放在  D (500) 和  M (1000) 的左边，来表示  400 和  900。
 
-给定一个罗马数字，将其转换成整数。输入确保在 1 到 3999 的范围内。
+给定一个罗马数字，将其转换成整数。输入确保在 1  到 3999 的范围内。
 
 示例 1：
 
 ```javascript
-输入: "III"
-输出: 3
+输入: 'III';
+输出: 3;
 ```
 
 示例 2：
 
 ```javascript
-输入: "IV"
-输出: 4
+输入: 'IV';
+输出: 4;
 ```
 
 示例 3：
 
 ```javascript
-输入: "IX"
-输出: 9
+输入: 'IX';
+输出: 9;
 ```
 
 示例 4：
 
 ```javascript
-输入: "LVIII"
-输出: 58
-解释: L = 50, V= 5, III = 3.
+输入: 'LVIII';
+输出: 58;
+解释: (L = 50), (V = 5), (III = 3);
 ```
 
 示例 5：
 
 ```javascript
-输入: "MCMXCIV"
-输出: 1994
-解释: M = 1000, CM = 900, XC = 90, IV = 4.
+输入: 'MCMXCIV';
+输出: 1994;
+解释: (M = 1000), (CM = 900), (XC = 90), (IV = 4);
 ```
 
 <details>
@@ -315,26 +315,26 @@ const p = isPalindrome(121);
  * @param {string} s
  * @return {number}
  */
-var romanToInt = function(s) {
-  // 罗马数字包含的 七种字符对应的值
-  let map = {
-    I: 1,
-    V: 5,
-    X: 10,
-    L: 50,
-    C: 100,
-    D: 500,
-    M: 1000,
+var romanToInt = function (s) {
+ // 罗马数字包含的 七种字符对应的值
+ let map = {
+  I: 1,
+  V: 5,
+  X: 10,
+  L: 50,
+  C: 100,
+  D: 500,
+  M: 1000,
  };
  let result = 0;
  for (let i = 0; i < s.length; i++) {
-    // 遍历 字符串 ， 判断当前字符 是否小于它的下一位的值
-    if(map[s[i]] < map[s[i + 1]]){
-      result -= map[s[i]]
-    }else{
-      result += map[s[i]]
-    }
+  // 遍历 字符串 ， 判断当前字符 是否小于它的下一位的值
+  if (map[s[i]] < map[s[i + 1]]) {
+   result -= map[s[i]];
+  } else {
+   result += map[s[i]];
   }
+ }
  return result;
 };
 ```
@@ -353,8 +353,8 @@ var romanToInt = function(s) {
 示例 1：
 
 ```javascript
-输入: ["flower","flow","flight"]
-输出: "fl"
+输入: ['flower', 'flow', 'flight'];
+输出: 'fl';
 ```
 
 示例 2：
@@ -366,14 +366,14 @@ var romanToInt = function(s) {
 ```
 
 说明:
-  所有输入只包含小写字母 a-z 。
+所有输入只包含小写字母 a-z 。
 
 <details>
   <summary><b>答案</b></summary>
   <p>
 
-  解题思路:
-      双层遍历暴力破解 , 遍历数组中的第一个元素作为前缀的参照物, 第二层遍历从第二个元素开始, 判断是否相等，拼接得到结果(注意 ： 拼接工作应该是在第一层循环处，而不是在第二层里面工作)
+解题思路:
+双层遍历暴力破解 , 遍历数组中的第一个元素作为前缀的参照物, 第二层遍历从第二个元素开始, 判断是否相等，拼接得到结果(注意 ： 拼接工作应该是在第一层循环处，而不是在第二层里面工作)
 
 ```javascript
 /**
@@ -406,7 +406,7 @@ const res = longestCommonPrefix(strs);
 
 # 有效的括号
 
-给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。
+给定一个只包括 '('，')'，'{'，'}'，'['，']'  的字符串，判断字符串是否有效。
 
 有效字符串需满足：
 
@@ -417,55 +417,55 @@ const res = longestCommonPrefix(strs);
 示例 1：
 
 ```javascript
-输入: "()"
-输出: true
+输入: '()';
+输出: true;
 ```
 
 示例 2：
 
 ```javascript
-输入: "()[]{}"
-输出: true
+输入: '()[]{}';
+输出: true;
 ```
 
 示例 3：
 
 ```javascript
-输入: "(]"
-输出: false
+输入: '(]';
+输出: false;
 ```
 
 示例 4：
 
 ```javascript
-输入: "([)]"
-输出: false
+输入: '([)]';
+输出: false;
 ```
 
 示例 5：
 
 ```javascript
-输入: "{[]}"
-输出: true
+输入: '{[]}';
+输出: true;
 ```
 
 说明:
-  所有输入只包含小写字母 a-z 。
+所有输入只包含小写字母 a-z 。
 
 <details>
   <summary><b>答案</b></summary>
   <p>
 
-  解题思路:
-    维护一个栈
-    如果是奇数 ， 一定是 false
-    把成对的符合存储成哈希， key 是 左边括号， value 是 右边括号
-    遍历字符，首先判断是否是 左边括号， 也就是哈希中的key
-    如果是左边括号 压入栈内存
-    如果不是 ， 判断当前元素是否跟已经压入栈的元素成一对（别忘了， map中的元素存储为 ： 左边括号 => 右边括号 ， 所以， 只需要取出栈中最后压入的元素去哈希中拿value）
-    匹配为一对的话 ， 把栈中最后的元素删除。(例如: '({[]})[]' , 前面三个字符都是左边的括号，那么他们会被依次压入栈中， 遇到第4个字符发现没有，便会进入是否跟最后压入的字符匹配，也就是 [ ， 如果不匹配 ， 整个程序结束，如果匹配， 删除 [ , 进入下一轮遍历,知道栈为空)
-    否则 返回false
-    最后 判断栈中是否为空， 返回值
+解题思路:
+维护一个栈
+如果是奇数 ， 一定是 false
+把成对的符合存储成哈希， key 是 左边括号， value 是 右边括号
+遍历字符，首先判断是否是 左边括号， 也就是哈希中的 key
+如果是左边括号 压入栈内存
+如果不是 ， 判断当前元素是否跟已经压入栈的元素成一对（别忘了， map 中的元素存储为 ： 左边括号 => 右边括号 ， 所以， 只需要取出栈中最后压入的元素去哈希中拿 value）
+匹配为一对的话 ， 把栈中最后的元素删除。(例如: '({[]})[]' , 前面三个字符都是左边的括号，那么他们会被依次压入栈中， 遇到第 4 个字符发现没有，便会进入是否跟最后压入的字符匹配，也就是 [ ， 如果不匹配 ， 整个程序结束，如果匹配， 删除 [ , 进入下一轮遍历,知道栈为空)
+否则 返回 false
+最后 判断栈中是否为空， 返回值
 
 ```javascript
 /**
@@ -496,7 +496,7 @@ var isValid = function (s) {
   }
  }
 
- return !stack.length
+ return !stack.length;
 };
 
 const res = isValid('({[]})[]');
@@ -522,9 +522,9 @@ const res = isValid('({[]})[]');
   <summary><b>答案</b></summary>
   <p>
 
-  解题思路:
-    双指针解题。
-    循环遍历 , 判断大小归并。
+解题思路:
+双指针解题。
+循环遍历 , 判断大小归并。
 
 ```javascript
 /**
@@ -543,7 +543,7 @@ var mergeTwoLists = function (l1, l2) {
  // 初始化 一个新的链表
  let newListNode = {
   val: 0,
-  next: null
+  next: null,
  };
  // 指针
  let pre = newListNode;
@@ -551,10 +551,10 @@ var mergeTwoLists = function (l1, l2) {
  // l1 和 l2 链表不为 null
  while (l1 && l2) {
   // 进入 循环 ， 判断 l1 是否小于 l2
-  if(l1.val < l2.val){
+  if (l1.val < l2.val) {
    pre.next = l1;
    l1 = l1.next;
-  }else {
+  } else {
    pre.next = l2;
    l2 = l2.next;
   }
@@ -562,9 +562,9 @@ var mergeTwoLists = function (l1, l2) {
   pre = pre.next;
  }
  // 最后一个节点要设置 ， 原因： l1 或者 l2 其中一个 为null 的时候就会停止进入循环体， 所以要拿到最后一层
- pre.next = l1 || l2
+ pre.next = l1 || l2;
  // 返回 新链表 的 next
- return newListNode.next
+ return newListNode.next;
 };
 
 let ListNode1 = {
@@ -592,8 +592,8 @@ let ListNode2 = {
 const res = mergeTwoLists(ListNode1, ListNode2);
 ```
 
-  解题思路:
-    递归解题 , l1 或者 l2 为 null 的时候 结束递归。
+解题思路:
+递归解题 , l1 或者 l2 为 null 的时候 结束递归。
 
 ```javascript
 /**
@@ -610,19 +610,17 @@ const res = mergeTwoLists(ListNode1, ListNode2);
  */
 
 var mergeTwoLists = function (l1, l2) {
- if(!l1) return l2;
- if(!l2) return l1;
+ if (!l1) return l2;
+ if (!l2) return l1;
 
- if(l1.val < l2.val){
-  l1.next = mergeTwoLists(l1.next , l2)
-  return l1
- }else{
+ if (l1.val < l2.val) {
+  l1.next = mergeTwoLists(l1.next, l2);
+  return l1;
+ } else {
   l2.next = mergeTwoLists(l1, l2.next);
-  return l2
+  return l2;
  }
 };
-
-
 
 let ListNode1 = {
  val: 1,
@@ -703,12 +701,12 @@ for (int i = 0; i < len; i++) {
   <summary><b>答案</b></summary>
   <p>
 
-  解题思路:
-    双指针解题: 前指针 与 后指针 对比 , 如果相等 前指针不变 ， 后指针继续向后查找， 如果相等， 前后指针向后移动， 并把后指针的值复制给前指针.
-    遍历结束后返回数组长度 , 因为 i 是索引位置 ， 所以要加 1 ，才是数组长度
+解题思路:
+双指针解题: 前指针 与 后指针 对比 , 如果相等 前指针不变 ， 后指针继续向后查找， 如果相等， 前后指针向后移动， 并把后指针的值复制给前指针.
+遍历结束后返回数组长度 , 因为 i 是索引位置 ， 所以要加 1 ，才是数组长度
 
 ```javascript
-  /**
+/**
  * @param {number[]} nums
  * @return {number}
  */
@@ -724,7 +722,92 @@ var removeDuplicates = function (nums) {
  return i + 1;
 };
 
-const res  = removeDuplicates([1,1,2])
+const res = removeDuplicates([1, 1, 2]);
+```
+
+  </p>
+</details>
+
+---
+
+# 移除元素
+
+给你一个数组 nums  和一个值 val，你需要 原地 移除所有数值等于  val  的元素，并返回移除后数组的新长度。
+
+不要使用额外的数组空间，你必须仅使用 O(1) 额外空间并 原地 修改输入数组。
+
+元素的顺序可以改变。你不需要考虑数组中超出新长度后面的元素。
+
+示例 1：
+
+```javascript
+给定 nums = [3,2,2,3], val = 3,
+
+函数应该返回新的长度 2, 并且 nums 中的前两个元素均为 2。
+
+你不需要考虑数组中超出新长度后面的元素。
+
+```
+
+示例 2：
+
+```javascript
+给定 nums = [0,1,2,2,3,0,4,2], val = 2,
+
+函数应该返回新的长度 5, 并且 nums 中的前五个元素为 0, 1, 3, 0, 4。
+
+注意这五个元素可为任意顺序。
+
+你不需要考虑数组中超出新长度后面的元素。
+
+```
+
+说明:
+
+为什么返回数值是整数，但输出的答案是数组呢?
+
+请注意，输入数组是以「引用」方式传递的，这意味着在函数里修改输入数组对于调用者是可见的。
+
+你可以想象内部操作如下:
+
+```javascript
+// nums 是以“引用”方式传递的。也就是说，不对实参作任何拷贝
+int len = removeElement(nums, val);
+
+// 在函数里修改输入数组对于调用者是可见的。
+// 根据你的函数返回的长度, 它会打印出数组中 该长度范围内 的所有元素。
+for (int i = 0; i < len; i++) {
+    print(nums[i]);
+}
+```
+
+<details>
+  <summary><b>答案</b></summary>
+  <p>
+
+解题思路:
+双指针解题: 遍历判断 是否等于 val ， 如果不是往前挪一位， i前进一位, 最后返回 i
+
+```javascript
+/**
+ * @param {number[]} nums
+ * @param {number} val
+ * @return {number}
+ */
+var removeElement = function (nums, val) {
+ if (nums.length == 0) return 0;
+
+ let i = 0;
+ for (let j = 0; j < nums.length; j++) {
+  if (nums[j] != val) {
+   nums[i] = nums[j];
+   i++;
+  }
+ }
+ return i;
+};
+
+const res = removeElement([0, 1, 2, 2, 3, 0, 4, 2], 2);
 ```
 
   </p>
